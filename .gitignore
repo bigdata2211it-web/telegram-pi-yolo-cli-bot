@@ -1,0 +1,11 @@
+.env
+.venv/
+state/
+uploads/
+*.log
+__pycache__/
+*.pyc
+last-response.txt
+AGENTS.md
+PROJECT_INDEX.md
+assets/emoji/

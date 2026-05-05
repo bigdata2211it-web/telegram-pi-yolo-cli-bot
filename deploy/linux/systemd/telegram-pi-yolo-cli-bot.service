@@ -1,0 +1,13 @@
+[Unit]
+Description=Telegram bridge for PI high-autonomy run
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/path/to/telegram-pi-yolo-cli-bot
+ExecStart=/usr/bin/python3 /path/to/telegram-pi-yolo-cli-bot/bot.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
