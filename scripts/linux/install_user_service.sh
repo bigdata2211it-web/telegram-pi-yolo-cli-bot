@@ -15,6 +15,7 @@ After=network-online.target
 [Service]
 Type=simple
 WorkingDirectory=${ROOT_DIR}
+Environment=PATH=${HOME}/.local/bin:/opt/node-v22.22.2-linux-x64/bin:/usr/local/bin:/usr/bin:/bin
 ExecStart=/usr/bin/python3 ${ROOT_DIR}/bot.py
 Restart=on-failure
 RestartSec=5

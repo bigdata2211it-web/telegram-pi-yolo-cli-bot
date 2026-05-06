@@ -20,6 +20,10 @@ from bot_state import write_session_id
 
 
 PI_SESSION_RE = re.compile(r"\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b", re.I)
+DEFAULT_PI_PATH_DIRS = (
+    str(Path.home() / ".local" / "bin"),
+    "/opt/node-v22.22.2-linux-x64/bin",
+)
 
 state_lock = threading.Lock()
 current_process = None
@@ -48,6 +52,25 @@ def resume_command_config():
             "json",
         ]
     return shlex.split(command)
+
+
+def pi_subprocess_env():
+    env = os.environ.copy()
+    path_dirs = []
+    configured = env.get("PI_EXTRA_PATH", "")
+    if configured:
+        path_dirs.extend(item for item in configured.split(os.pathsep) if item)
+    path_dirs.extend(DEFAULT_PI_PATH_DIRS)
+    path_dirs.extend(item for item in env.get("PATH", "").split(os.pathsep) if item)
+
+    deduped = []
+    seen = set()
+    for item in path_dirs:
+        if item not in seen:
+            deduped.append(item)
+            seen.add(item)
+    env["PATH"] = os.pathsep.join(deduped)
+    return env
 
 
 def add_files_to_command(cmd, file_paths):
@@ -315,6 +338,7 @@ def run_pi(chat_id, prompt, attachments, send_message, t):
         process = subprocess.Popen(
             cmd,
             cwd=workdir,
+            env=pi_subprocess_env(),
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,

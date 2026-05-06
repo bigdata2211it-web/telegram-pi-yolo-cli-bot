@@ -46,6 +46,12 @@ class PiCommandTests(unittest.TestCase):
                 ["pi", "--mode", "json", "--continue"],
             )
 
+    def test_pi_subprocess_env_adds_pi_paths_before_existing_path(self):
+        with patch.dict(os.environ, {"PATH": "/usr/bin", "PI_EXTRA_PATH": "/custom/bin"}, clear=True):
+            path = bot_pi.pi_subprocess_env()["PATH"].split(os.pathsep)
+
+        self.assertEqual(path[:4], ["/custom/bin", str(Path.home() / ".local" / "bin"), "/opt/node-v22.22.2-linux-x64/bin", "/usr/bin"])
+
     def test_add_files_to_command_uses_pi_file_args(self):
         cmd = ["pi", "--mode", "json", "--session", "019df6bf-b533-72ef-ab1f-deaebb66a91d", "Describe this"]
 

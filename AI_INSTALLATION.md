@@ -67,7 +67,9 @@ STT_COMMAND=.venv/bin/python scripts/transcribe_voice.py
 Linux example:
 
 ```dotenv
-PI_COMMAND=pi --mode json
+PI_EXTRA_PATH=/home/debian/.local/bin:/opt/node-v22.22.2-linux-x64/bin
+PI_COMMAND=/home/debian/.local/bin/pi --mode json
+PI_RESUME_COMMAND=/home/debian/.local/bin/pi --mode json
 ```
 
 macOS example:
