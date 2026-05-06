@@ -21,8 +21,9 @@ from bot_state import write_session_id
 
 PI_SESSION_RE = re.compile(r"\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b", re.I)
 DEFAULT_PI_PATH_DIRS = (
-    str(Path.home() / ".local" / "bin"),
-    "/opt/node-v22.22.2-linux-x64/bin",
+    [str(Path.home() / "AppData" / "Roaming" / "npm")]
+    if os.name == "nt"
+    else [str(Path.home() / ".local" / "bin"), "/opt/node-v22.22.2-linux-x64/bin"]
 )
 
 state_lock = threading.Lock()

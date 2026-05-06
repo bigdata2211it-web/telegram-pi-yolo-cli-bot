@@ -106,12 +106,13 @@ systemctl --user restart telegram-pi-yolo-cli-bot.service
 Linux `.env` example:
 
 ```dotenv
-PI_WORKDIR=/home/debian
+PI_WORKDIR=/home/you
 STT_COMMAND=.venv/bin/python scripts/transcribe_voice.py
-PI_EXTRA_PATH=/home/debian/.local/bin:/opt/node-v22.22.2-linux-x64/bin
-PI_COMMAND=/home/debian/.local/bin/pi --mode json
-PI_RESUME_COMMAND=/home/debian/.local/bin/pi --mode json
+PI_COMMAND=pi --mode json
+PI_RESUME_COMMAND=pi --mode json
 ```
+
+The Linux service installer adds common PI install directories to `PATH`. If `pi` lives somewhere custom, set `PI_EXTRA_PATH=/absolute/path/to/bin` or use an absolute `PI_COMMAND`.
 
 ## macOS
 

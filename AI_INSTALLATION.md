@@ -67,10 +67,11 @@ STT_COMMAND=.venv/bin/python scripts/transcribe_voice.py
 Linux example:
 
 ```dotenv
-PI_EXTRA_PATH=/home/debian/.local/bin:/opt/node-v22.22.2-linux-x64/bin
-PI_COMMAND=/home/debian/.local/bin/pi --mode json
-PI_RESUME_COMMAND=/home/debian/.local/bin/pi --mode json
+PI_COMMAND=pi --mode json
+PI_RESUME_COMMAND=pi --mode json
 ```
+
+The Linux user-service installer adds common PI install directories to `PATH`. If `pi` is installed in a custom directory, set `PI_EXTRA_PATH=/absolute/path/to/bin` or use an absolute `PI_COMMAND`.
 
 macOS example:
 
